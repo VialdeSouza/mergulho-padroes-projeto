@@ -43,15 +43,22 @@ class WindowsDialog extends Dialog {
 }
 
 export class Application {
-  private readonly dialog: Dialog;
+  private readonly os: string;
 
-  constructor(os: String) {
-    if (os == "web") {
-      this.dialog = new WebDialog();
-    } else this.dialog = new WindowsDialog();
+  constructor(os: string) {
+    this.os = os;
   }
 
-  getDialog() {
-    return this.dialog;
+  initialize(): Dialog {
+    if (this.os == "web") {
+      return new WebDialog();
+    }
+    return new WindowsDialog();
+  }
+
+  main() {
+   const dialog = this.initialize();
+    dialog.render();
   }
 }
+
